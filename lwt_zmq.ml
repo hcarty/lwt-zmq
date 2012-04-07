@@ -6,7 +6,7 @@ module Lwt_socket = struct
 
   let of_socket socket = {
     socket;
-    fd = Lwt_unix.of_unix_file_descr (ZMQ.Socket.get_fd socket);
+    fd = Lwt_unix.of_unix_file_descr ~blocking:false (ZMQ.Socket.get_fd socket);
   }
 
   let wrap event f s =

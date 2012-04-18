@@ -1,4 +1,4 @@
-module Lwt_socket = struct
+module Socket = struct
   type 'a t = {
     socket : 'a ZMQ.Socket.t;
     fd : Lwt_unix.file_descr;
@@ -24,3 +24,4 @@ module Lwt_socket = struct
   let send s m =
     wrap Lwt_unix.Write (fun s -> ZMQ.Socket.send ~opt:ZMQ.Socket.S_no_block s m) s
 end
+

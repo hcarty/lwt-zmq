@@ -1,4 +1,4 @@
-module Lwt_socket : sig
+module Socket : sig
 
   (** An Lwt-wrapped zeromq socket *)
   type 'a t

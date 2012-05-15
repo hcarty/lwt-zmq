@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 806c9676418a028081336b3c17e26cb4)
+# DO NOT EDIT (digest: bc0adcd8979b0fe82fc2d0a56c19604a)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -16,7 +16,22 @@
 # Library lwt-zmq
 "src": include
 <src/*.ml{,i}>: pkg_lwt.unix
+<src/*.ml{,i}>: pkg_lwt.syntax
 <src/*.ml{,i}>: pkg_ZMQ
+# Executable req
+"test/req.byte": use_lwt-zmq
+"test/req.byte": pkg_lwt.unix
+"test/req.byte": pkg_lwt.syntax
+"test/req.byte": pkg_ZMQ
+# Executable rep
+"test/rep.byte": use_lwt-zmq
+"test/rep.byte": pkg_lwt.unix
+"test/rep.byte": pkg_lwt.syntax
+"test/rep.byte": pkg_ZMQ
+<test/*.ml{,i}>: use_lwt-zmq
+<test/*.ml{,i}>: pkg_lwt.unix
+<test/*.ml{,i}>: pkg_lwt.syntax
+<test/*.ml{,i}>: pkg_ZMQ
 # OASIS_STOP
 <src/lwt_zmq.ml>: syntax_camlp4o
 <test/*.ml>: syntax_camlp4o

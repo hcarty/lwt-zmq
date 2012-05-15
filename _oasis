@@ -11,6 +11,6 @@ Library "lwt-zmq"
   BuildTools: ocamlbuild
   FindlibName: lwt-zmq
   Modules:    Lwt_zmq
-  BuildDepends: ZMQ, lwt.unix
+  BuildDepends: ZMQ, lwt.unix, lwt.syntax
   CompiledObject: best
   

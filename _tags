@@ -18,3 +18,5 @@
 <src/*.ml{,i}>: pkg_lwt.unix
 <src/*.ml{,i}>: pkg_ZMQ
 # OASIS_STOP
+<src/lwt_zmq.ml>: syntax_camlp4o
+<test/*.ml>: syntax_camlp4o

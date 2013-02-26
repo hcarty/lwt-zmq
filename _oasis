@@ -26,3 +26,20 @@ Executable rep
   Install: false
   BuildDepends: lwt-zmq, lwt.syntax
 
+Flag parallel_pipeline
+  Description: build the parallel pipeline sample from the zmq guide
+  Default: false
+
+Executable worker
+  Build$: flag(parallel_pipeline)
+  Path: test/parallel_pipeline
+  MainIs: worker.ml
+  Install: false
+  BuildDepends: lwt-zmq
+
+Executable foreman
+  Build$: flag(parallel_pipeline)
+  Path: test/parallel_pipeline
+  MainIs: foreman.ml
+  Install: false
+  BuildDepends: lwt-zmq

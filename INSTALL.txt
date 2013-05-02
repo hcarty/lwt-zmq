@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 1e528fcc0c76c9b253b1f3c15118d45f) *)
+(* DO NOT EDIT (digest: ed1949a92cbf1681812d969b69b6d726) *)
 This is the INSTALL file for the lwt-zmq distribution.
 
 This package uses OASIS to generate its build system. See section OASIS for
@@ -12,7 +12,7 @@ In order to compile this package, you will need:
 * ocaml
 * findlib
 * ZMQ for library lwt-zmq
-* lwt
+* lwt for library lwt-zmq, executable rep, executable req
 
 Installing
 ==========

@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 57a6c61e70616f218ecae7bae0ddc575)
-version = "1.0~beta3"
+# DO NOT EDIT (digest: 5c1faedfddc13d999c60e7075ba796ba)
+version = "1.0~beta4"
 description = "Lwt-friendly interface to ZeroMQ"
 requires = "ZMQ lwt.unix lwt.syntax"
 archive(byte) = "lwt-zmq.cma"

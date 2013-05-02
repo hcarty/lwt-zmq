@@ -1,6 +1,6 @@
 OASISFormat: 0.3
 Name:        lwt-zmq
-Version:     1.0~beta3
+Version:     1.0~beta4
 Synopsis:    Lwt-friendly interface to ZeroMQ
 Authors:     Hezekiah M. Carty
 License:     MIT
@@ -13,7 +13,7 @@ Library "lwt-zmq"
   Modules:    Lwt_zmq
   BuildDepends: ZMQ, lwt.unix, lwt.syntax
   CompiledObject: best
-  
+
 Executable req
   Path: test
   MainIs: req.ml
@@ -26,3 +26,20 @@ Executable rep
   Install: false
   BuildDepends: lwt-zmq, lwt.syntax
 
+Flag parallel_pipeline
+  Description: build the parallel pipeline sample from the zmq guide
+  Default: false
+
+Executable worker
+  Build$: flag(parallel_pipeline)
+  Path: test/parallel_pipeline
+  MainIs: worker.ml
+  Install: false
+  BuildDepends: lwt-zmq
+
+Executable foreman
+  Build$: flag(parallel_pipeline)
+  Path: test/parallel_pipeline
+  MainIs: foreman.ml
+  Install: false
+  BuildDepends: lwt-zmq

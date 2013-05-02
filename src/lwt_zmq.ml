@@ -57,9 +57,7 @@ module Socket = struct
   let recv_all s =
     (* Once the first piece arrives we don't need to worry about the rest
        blocking *)
-    lwt first =
-      wrap (fun s -> ZMQ.Socket.recv ~opt:ZMQ.Socket.R_no_block s) s
-    in
+    lwt first = recv s in
     let rec loop accu =
       if ZMQ.Socket.has_more s.socket then
         loop (ZMQ.Socket.recv s.socket :: accu)

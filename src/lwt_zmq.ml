@@ -14,7 +14,7 @@ module Socket = struct
 
   let to_socket s = s.socket
 
-  (* This is horribly convoluted but matches what the zeromq authors call for *)
+  (* Wrap possible exceptions and events which can occur in a ZeroMQ call *)
   let wrap f s =
     let io_loop () =
       Lwt_unix.wrap_syscall Lwt_unix.Read s.fd (
@@ -26,6 +26,8 @@ module Socket = struct
             | ZMQ.Socket.Poll_in
             | ZMQ.Socket.Poll_out
             | ZMQ.Socket.Poll_in_out -> f s.socket
+            (* This should not happen as far as I understand *)
+            | ZMQ.Socket.Poll_error -> assert false
           with
           (* Not ready *)
           | ZMQ.ZMQ_exception (ZMQ.EAGAIN, _) -> raise Lwt_unix.Retry
@@ -55,39 +57,9 @@ module Socket = struct
     wrap (fun s -> ZMQ.Socket.send ~opt:ZMQ.Socket.S_no_block s m) s
 
   let recv_all s =
-    (* Once the first piece arrives we don't need to worry about the rest
-       blocking *)
-    lwt first = recv s in
-    let rec loop accu =
-      if ZMQ.Socket.has_more s.socket then
-        loop (ZMQ.Socket.recv s.socket :: accu)
-      else
-        accu
-    in
-    Lwt.return (List.rev (loop [first]))
+    wrap (fun s -> ZMQ.Socket.recv_all ~block:false s) s
 
   let send_all s parts =
-    match parts with
-    | [] -> Lwt.return_unit
-    | hd :: [] -> send s hd
-    | hd :: tl ->
-        (* Once the first piece sends we don't need to worry about the rest
-           blocking *)
-        lwt () =
-          wrap (fun s -> ZMQ.Socket.send ~opt:ZMQ.Socket.S_more_no_block s hd) s
-        in
-        let rec loop remaining =
-          match remaining with
-          | [] -> Lwt.return_unit (* This shouldn't happen *)
-          | p :: [] ->
-              (* This is the last piece *)
-              ZMQ.Socket.send s.socket p;
-              Lwt.return_unit
-          | p :: r ->
-              (* There is still more to send after this *)
-              ZMQ.Socket.send ~opt:ZMQ.Socket.S_more s.socket p;
-              loop r
-        in
-        loop tl
+    wrap (fun s -> ZMQ.Socket.send_all ~block:false s parts) s
 end
 

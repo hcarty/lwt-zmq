@@ -1,5 +1,0 @@
-(* OASIS_START *)
-(* DO NOT EDIT (digest: 16269a77db84fabc3eef71fd24daf796) *)
-Authors of lwt-zmq
-Hezekiah M. Carty
-(* OASIS_STOP *)

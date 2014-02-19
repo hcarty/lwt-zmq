@@ -51,10 +51,10 @@ module Socket = struct
     idle_loop ()
 
   let recv s =
-    wrap (fun s -> ZMQ.Socket.recv ~opt:ZMQ.Socket.R_no_block s) s
+    wrap (fun s -> ZMQ.Socket.recv ~block:false s) s
 
   let send s m =
-    wrap (fun s -> ZMQ.Socket.send ~opt:ZMQ.Socket.S_no_block s m) s
+    wrap (fun s -> ZMQ.Socket.send ~block:false s m) s
 
   let recv_all s =
     wrap (fun s -> ZMQ.Socket.recv_all ~block:false s) s

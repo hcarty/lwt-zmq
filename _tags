@@ -1,4 +1,0 @@
-# OASIS_START
-# OASIS_STOP
-<src/lwt_zmq.ml>: syntax_camlp4o
-<test/*.ml>: syntax_camlp4o

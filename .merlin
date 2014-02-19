@@ -1,0 +1,4 @@
+PKG ZMQ lwt.unix
+S src/
+B _build/src/
+EXT lwt

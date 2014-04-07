@@ -61,5 +61,19 @@ module Socket = struct
 
   let send_all s parts =
     wrap (fun s -> ZMQ.Socket.send_all ~block:false s parts) s
-end
 
+  module Router = struct
+    type id_t = string
+
+    let id_of_string id = id
+
+    let recv s =
+      lwt parts = recv_all s in
+      match parts with
+      | id :: message -> Lwt.return (id, message)
+      | _ -> assert false
+
+    let send s id message =
+      send_all s (id :: message)
+  end
+end

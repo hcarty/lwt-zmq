@@ -30,22 +30,22 @@ module Socket = struct
             | ZMQ.Socket.Poll_error -> assert false
           with
           (* Not ready *)
-          | ZMQ.ZMQ_exception (ZMQ.EAGAIN, _) -> raise Lwt_unix.Retry
+          | Unix.Unix_error (Unix.EAGAIN, _, _) -> raise Lwt_unix.Retry
           (* We were interrupted so we need to start all over again *)
-          | ZMQ.ZMQ_exception (ZMQ.EINTR, _) -> raise Break_event_loop
+          | Unix.Unix_error (Unix.EINTR, _, _) -> raise Break_event_loop
       )
     in
     let rec idle_loop () =
       try_lwt
         Lwt.wrap1 f s.socket
       with
-      | ZMQ.ZMQ_exception (ZMQ.EAGAIN, _) -> begin
+      | Unix.Unix_error ( Unix.EAGAIN, _, _) -> begin
         try_lwt
           io_loop ()
         with
         | Break_event_loop -> idle_loop ()
       end
-      | ZMQ.ZMQ_exception (ZMQ.EINTR, _) ->
+      | Unix.Unix_error (Unix.EINTR, _, _) -> 
           idle_loop ()
     in
     idle_loop ()

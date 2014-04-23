@@ -1,5 +1,5 @@
 let () =
-  let z = ZMQ.init () in
+  let z = ZMQ.Context.create () in
   let socket = ZMQ.Socket.create z ZMQ.Socket.req in
   ZMQ.Socket.connect socket "tcp://127.0.0.1:5555";
   Lwt_main.run (
@@ -12,6 +12,6 @@ let () =
     assert_lwt (reply = "reply")
   );
   ZMQ.Socket.close socket;
-  ZMQ.term z;
+  ZMQ.Context.terminate z;
   ()
 

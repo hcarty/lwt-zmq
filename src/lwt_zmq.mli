@@ -13,9 +13,9 @@ module Socket : sig
       threads *)
   val recv : 'a t -> string Lwt.t
 
-  (** [send socket m] sends a message [m] on [socket] without blocking other
+  (** [send ?more socket m] sends a message [m] on [socket] without blocking other
       Lwt threads *)
-  val send : 'a t -> string -> unit Lwt.t
+  val send : ?more:bool -> 'a t -> string -> unit Lwt.t
 
   (** [recv_all socket] waits for a multi-part message on [socket] without
       blocking other Lwt threads *)

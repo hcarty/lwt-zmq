@@ -45,7 +45,7 @@ module Socket = struct
         with
         | Break_event_loop -> idle_loop ()
       end
-      | Unix.Unix_error (Unix.EINTR, _, _) -> 
+      | Unix.Unix_error (Unix.EINTR, _, _) ->
           idle_loop ()
     in
     idle_loop ()
@@ -53,8 +53,8 @@ module Socket = struct
   let recv s =
     wrap (fun s -> ZMQ.Socket.recv ~block:false s) s
 
-  let send s m =
-    wrap (fun s -> ZMQ.Socket.send ~block:false s m) s
+  let send ?more s m =
+    wrap (fun s -> ZMQ.Socket.send ?more ~block:false s m) s
 
   let recv_all s =
     wrap (fun s -> ZMQ.Socket.recv_all ~block:false s) s

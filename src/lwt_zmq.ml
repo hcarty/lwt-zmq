@@ -30,22 +30,22 @@ module Socket = struct
             | ZMQ.Socket.Poll_error -> assert false
           with
           (* Not ready *)
-          | ZMQ.ZMQ_exception (ZMQ.EAGAIN, _) -> raise Lwt_unix.Retry
+          | Unix.Unix_error (Unix.EAGAIN, _, _) -> raise Lwt_unix.Retry
           (* We were interrupted so we need to start all over again *)
-          | ZMQ.ZMQ_exception (ZMQ.EINTR, _) -> raise Break_event_loop
+          | Unix.Unix_error (Unix.EINTR, _, _) -> raise Break_event_loop
       )
     in
     let rec idle_loop () =
       try_lwt
         Lwt.wrap1 f s.socket
       with
-      | ZMQ.ZMQ_exception (ZMQ.EAGAIN, _) -> begin
+      | Unix.Unix_error ( Unix.EAGAIN, _, _) -> begin
         try_lwt
           io_loop ()
         with
         | Break_event_loop -> idle_loop ()
       end
-      | ZMQ.ZMQ_exception (ZMQ.EINTR, _) ->
+      | Unix.Unix_error (Unix.EINTR, _, _) ->
           idle_loop ()
     in
     idle_loop ()
@@ -53,13 +53,27 @@ module Socket = struct
   let recv s =
     wrap (fun s -> ZMQ.Socket.recv ~block:false s) s
 
-  let send s m =
-    wrap (fun s -> ZMQ.Socket.send ~block:false s m) s
+  let send ?more s m =
+    wrap (fun s -> ZMQ.Socket.send ?more ~block:false s m) s
 
   let recv_all s =
     wrap (fun s -> ZMQ.Socket.recv_all ~block:false s) s
 
   let send_all s parts =
     wrap (fun s -> ZMQ.Socket.send_all ~block:false s parts) s
-end
 
+  module Router = struct
+    type id_t = string
+
+    let id_of_string id = id
+
+    let recv s =
+      lwt parts = recv_all s in
+      match parts with
+      | id :: message -> Lwt.return (id, message)
+      | _ -> assert false
+
+    let send s id message =
+      send_all s (id :: message)
+  end
+end

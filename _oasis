@@ -13,20 +13,20 @@ Library "lwt-zmq"
   Path:       src
   FindlibName: lwt-zmq
   Modules:    Lwt_zmq
-  BuildDepends: ZMQ, lwt.unix, lwt.syntax
+  BuildDepends: ZMQ, lwt.unix
   CompiledObject: best
 
 Executable req
   Path: test
   MainIs: req.ml
   Install: false
-  BuildDepends: lwt-zmq, lwt.syntax
+  BuildDepends: lwt-zmq
 
 Executable rep
   Path: test
   MainIs: rep.ml
   Install: false
-  BuildDepends: lwt-zmq, lwt.syntax
+  BuildDepends: lwt-zmq
 
 Flag parallel_pipeline
   Description: build the parallel pipeline sample from the zmq guide
@@ -49,4 +49,4 @@ Executable foreman
 SourceRepository master
   Type: git
   Location: https://github.com/hcarty/lwt-zmq.git
-  Browser: https://github.com/hcarty/lwt-zmq 
+  Browser: https://github.com/hcarty/lwt-zmq

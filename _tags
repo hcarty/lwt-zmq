@@ -1,0 +1,43 @@
+# OASIS_START
+# DO NOT EDIT (digest: 902569e28aa87f5b9f984048e2d2eba8)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library lwt-zmq
+"src/lwt-zmq.cmxs": use_lwt-zmq
+<src/*.ml{,i,y}>: package(ZMQ)
+<src/*.ml{,i,y}>: package(lwt.unix)
+# Executable req
+"test/req.byte": package(ZMQ)
+"test/req.byte": package(lwt.unix)
+"test/req.byte": use_lwt-zmq
+# Executable rep
+"test/rep.byte": package(ZMQ)
+"test/rep.byte": package(lwt.unix)
+"test/rep.byte": use_lwt-zmq
+<test/*.ml{,i,y}>: package(ZMQ)
+<test/*.ml{,i,y}>: package(lwt.unix)
+<test/*.ml{,i,y}>: use_lwt-zmq
+# Executable worker
+"test/parallel_pipeline/worker.byte": package(ZMQ)
+"test/parallel_pipeline/worker.byte": package(lwt.unix)
+"test/parallel_pipeline/worker.byte": use_lwt-zmq
+# Executable foreman
+"test/parallel_pipeline/foreman.byte": package(ZMQ)
+"test/parallel_pipeline/foreman.byte": package(lwt.unix)
+"test/parallel_pipeline/foreman.byte": use_lwt-zmq
+<test/parallel_pipeline/*.ml{,i,y}>: package(ZMQ)
+<test/parallel_pipeline/*.ml{,i,y}>: package(lwt.unix)
+<test/parallel_pipeline/*.ml{,i,y}>: use_lwt-zmq
+# OASIS_STOP

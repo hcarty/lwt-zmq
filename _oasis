@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        lwt-zmq
-Version:     2.0.0
+Version:     2.0.1
 Synopsis:    Lwt-friendly interface to ZeroMQ
 Authors:     Hezekiah M. Carty <hez@0ok.org>
 Maintainers: Hezekiah M. Carty <hez@0ok.org>
@@ -8,6 +8,7 @@ Homepage:    https://github.com/hcarty/lwt-zmq
 License:     MIT
 Plugins:     META (0.4)
 BuildTools: ocamlbuild
+OCamlVersion: >= 3.12.1
 
 Library "lwt-zmq"
   Path:       src

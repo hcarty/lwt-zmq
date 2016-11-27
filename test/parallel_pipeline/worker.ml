@@ -3,7 +3,7 @@ open Lwt
 
 let () = Random.self_init ()
 
-let z = ZMQ.init ()
+let z = ZMQ.Context.create ()
 
 let lwt_zmq_socket z ~zmq_type ~address =
   let s = ZMQ.Socket.create z zmq_type in

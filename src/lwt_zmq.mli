@@ -42,3 +42,10 @@ module Socket : sig
     val send : [ `Router ] t -> id_t -> string list -> unit Lwt.t
   end
 end
+
+module Monitor : sig
+
+  (** [recv socket] waits for a monitoring event on [socket] without blocking other
+      Lwt threads. *) 
+  val recv : [ `Monitor ] Socket.t -> ZMQ.Monitor.event Lwt.t
+end

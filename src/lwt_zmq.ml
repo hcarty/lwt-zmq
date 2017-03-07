@@ -78,3 +78,9 @@ module Socket = struct
       send_all s (id :: message)
   end
 end
+
+module Monitor = struct
+
+  let recv s = Socket.wrap (fun s -> ZMQ.Monitor.recv ~block:false s) s
+
+end

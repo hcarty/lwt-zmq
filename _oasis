@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        lwt-zmq
-Version:     2.0.1
+Version:     2.1.0
 Synopsis:    Lwt-friendly interface to ZeroMQ
 Authors:     Hezekiah M. Carty <hez@0ok.org>
 Maintainers: Hezekiah M. Carty <hez@0ok.org>

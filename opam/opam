@@ -1,0 +1,29 @@
+opam-version: "1.2"
+name: "lwt-zmq"
+version: "2.1.0"
+maintainer: "Hezekiah M. Carty <hez@0ok.org>"
+authors: [ "Hezekiah M. Carty <hez@0ok.org>" ]
+license: "MIT"
+homepage: "https://github.com/hcarty/lwt-zmq"
+dev-repo: "https://github.com/hcarty/lwt-zmq.git"
+bug-reports: "https://github.com/hcarty/lwt-zmq/issues"
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-build"]
+]
+install: ["ocaml" "setup.ml" "-install"]
+remove: [
+  ["ocamlfind" "remove" "lwt-zmq"]
+]
+build-test: [
+  ["ocaml" "setup.ml" "-configure" "--enable-tests"]
+  ["ocaml" "setup.ml" "-build"]
+  ["ocaml" "setup.ml" "-test"]
+]
+depends: [
+  "lwt"
+  "zmq"
+  "ocamlbuild" {build}
+  "ocamlfind" {build}
+]
+available: [ ocaml-version >= "3.12.1" ]
